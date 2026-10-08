@@ -1,0 +1,27 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "dineflow-823d4",
+          "appId": "1:864073072538:android:18d61ee5b3144b21390423",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "dineflow-823d4",
+          "configurations": {
+            "android": "1:864073072538:android:18d61ee5b3144b21390423",
+            "web": "1:864073072538:web:3342ec3be23b9e2b390423",
+            "windows": "1:864073072538:web:cf9d9d7e50f28f0e390423"
+          }
+        }
+      }
+    }
+  }
+}

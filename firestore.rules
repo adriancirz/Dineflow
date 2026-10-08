@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 1. Menu and Categories (Public read for all dining customers and staff)
+    match /menu/{menuId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    match /menuCategories/{categoryId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // 2. Tables collection (Public read and claimable by customers and staff)
+    match /tables/{tableId} {
+      allow read, write: if true;
+    }
+
+    // 3. Orders collection and subcollections
+    match /orders/{orderId} {
+      allow read, write: if true;
+
+      match /items/{itemId} {
+        allow read, write: if true;
+      }
+
+      match /statusHistory/{historyId} {
+        allow read, write: if true;
+      }
+    }
+
+    // 4. Notifications collection (waiter service calls, bill requests, kitchen alerts)
+    match /notifications/{notifId} {
+      allow read, write: if true;
+    }
+
+    // 5. System settings and inventory
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    match /inventory/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+
+      match /adjustments/{adjustmentId} {
+        allow read, write: if isAuthenticated();
+      }
+    }
+
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    match /shifts/{shiftId} {
+      allow read, write: if true;
+    }
+  }
+}
